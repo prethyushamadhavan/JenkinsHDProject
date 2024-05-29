@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKER_IMAGE = 'my-node-app'
         SONARQUBE_URL = 'http://localhost:9000'
-        SONARQUBE_TOKEN = 'your-sonarqube-token' // Replace with your SonarQube token
+        SONARQUBE_TOKEN = 'squ_fec78446cff9d7006cf3058bb320c20f35aefccb'
     }
 
     triggers {
@@ -14,7 +14,7 @@ pipeline {
     stages {
         stage('Clone repository') {
             steps {
-                git 'https://github.com/prethyushamadhavan/WebProject.git'
+                git branch: 'main', url: 'https://github.com/prethyushamadhavan/WebProject.git'
             }
         }
         stage('Build Docker Image') {

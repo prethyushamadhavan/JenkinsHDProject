@@ -39,17 +39,24 @@ pipeline {
                 }
             }
         }
-        stage('Run Tests') {
+        stage('Install Dependencies') {
             steps {
                 bat 'npm install'
+            }
+        }
+        stage('Verify Cypress Installation') {
+            steps {
+                bat 'npx cypress verify'
+            }
+        }
+        stage('Run Tests') {
+            steps {
                 bat 'npm test'
             }
         }
         stage('Run Cypress Tests') {
             steps {
-                script {
-                    bat 'npx cypress run --config video=false --env timeout=60000'
-                }
+                bat 'npx cypress run --config video=false --env timeout=60000'
             }
         }
         stage('Code Quality Analysis') {

@@ -42,7 +42,7 @@ pipeline {
         stage('Run Cypress Tests') {
             steps {
                 script {
-                    def workspace = pwd().replace('\\', '/')
+                    def workspace = pwd().replace('\\', '/').toLowerCase()
                     docker.image("${DOCKER_IMAGE}").inside("-v ${workspace}:/workspace -w /workspace") {
                         bat 'npx cypress run'
                     }
@@ -52,7 +52,7 @@ pipeline {
         stage('Code Quality Analysis') {
             steps {
                 script {
-                    def workspace = pwd().replace('\\', '/')
+                    def workspace = pwd().replace('\\', '/').toLowerCase()
                     docker.image('sonarsource/sonar-scanner-cli').inside("-v ${workspace}:/workspace -w /workspace") {
                         withSonarQubeEnv('SonarQube') {
                             bat """

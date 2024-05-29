@@ -17,12 +17,11 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/prethyushamadhavan/WebProject.git'
             }
         }
-
-        
-         stage('Verify Docker Setup') {
+        stage('Verify Docker Setup') {
             steps {
                 script {
                     sh 'docker --version'
+                    sh 'docker ps'
                 }
             }
         }
@@ -33,7 +32,6 @@ pipeline {
                 }
             }
         }
-
         stage('Run Tests') {
             steps {
                 script {

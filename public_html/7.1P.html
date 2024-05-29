@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task 7.1P</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="7.1.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2 class="my-4">Working with STRING Objects</h2>
+        <p>Working with 'string' data in Javascript is very important and common with any program that users
+            interact with. In this task we explore using the inbuilt Javascript <i>String</i> system object.
+        </p>
+        <form id="myForm">
+            <h2>INPUT DATA</h2>
+            <p>Please complete the input fields in the following form: </p>
+            <div class="form-group">
+                <label for="inputString">Input string:</label>
+                <input type="text" class="form-control" id="inputString" required placeholder="Type the string here..">
+            </div>
+            <div class="form-group">
+                <label for="substring">Sub-string to look for:</label>
+                <input type="text" class="form-control" id="substring" required placeholder="String to search for..">
+            </div>
+            <div class="form-group">
+                <label for="position">The position #:</label>
+                <input type="number" class="form-control" id="position" required placeholder="The position # in the string..">
+            </div>
+            <button type="button" class="btn btn-primary" onclick="processInputString()">Process the Input String</button>
+            <button type="reset" class="btn btn-secondary">Reset Form</button>
+        </form>
+        <div id="processedResults" class="mt-4"></div>
+    </div>
+</body>
+</html>

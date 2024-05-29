@@ -1,0 +1,15 @@
+.button {
+   
+    padding: 10px 20px;
+    background-color: #0eb482;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+  box-shadow: 2px 2px 4px rgba(2, 0, 0, 0.4); 
+  } 
+  
+  h1,h2 {
+    box-shadow: 3px 2px 10px rgba(0, 0, 0, 0.2); 
+    border: 1px solid #dddddd; 
+    border-radius: 5px;
+}

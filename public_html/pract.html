@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>CSS Template</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+.header {
+  background-color: #f1f1f1;
+  padding: 30px;
+  text-align: center;
+  font-size: 35px;
+}
+
+.column {
+  float: left;
+  padding: 10px;
+  height: 300px; 
+}
+
+.column.side {
+  width: 25%;
+}
+
+.column.middle {
+  width: 50%;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.footer {
+  background-color: #f1f1f1;
+  padding: 10px;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .column.side, .column.middle {
+    width: 100%;
+  }
+}
+</style>
+<div class="container-fluid">
+    <div class="jumbotron">
+      <h1 class="header">Marine Drive in Mumbai</h1>
+    </div>
+  </div>
+</head>
+</head>
+<body>
+    <main>
+        <div>
+          <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <div class="container-fluid">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="https://artsandculture.google.com/entity/marine-drive/m0356yl?categoryid=place">About</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="https://www.google.com/search?q=Marine+drive+mumbai+best+images&tbm=isch&chips=q:marine+drive+mumbai+best+images,online_chips:night:lmhMjedxDCA%3D&rlz=1C1ONGR_enAU1083AU1083&hl=en-US&sa=X&ved=2ahUKEwjb1rHw6uuCAxUk2zgGHVVbCpMQ4lYoA3oECAEQMg&biw=1519&bih=826#imgrc=oOR1tQFWDhXbEM">Images</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="https://www.tripadvisor.com.au/AttractionsNear-g304554-d321437-Marine_Drive-Mumbai_Maharashtra.html">Things to Do</a>
+              </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row">
+              <div class="column" style="background-color: rgb(170, 209, 231)">
+                <div class="image-container">
+                    <img src="Marine_BG.jpg" alt="image">
+                Marine Drive is a 3.6-kilometre-long Promenade along the Netaji Subhash Chandra Bose Road in Mumbai, India. Often, the names Marine Drive and Marines are used interchangeably to refer to this 3.9 km stretch. The road and promenade were constructed by Pallonji Mistry. It is a 'C'-shaped six-lane concrete road along the coast of a natural bay. At the northern end of Marine Drive is Girgaon Chowpatty and the adjacent road along links Nariman Point at southern tip to Babulnath and Malabar Hill at northern tip. Marine Drive is situated on reclaimed land facing west-south-west. Marine Drive is also known as the Queen's Necklace because, when viewed at night from an elevated point anywhere along the drive, the street lights resemble a string of pearls in a necklace.<br>
+                The official name for this road, though rarely used, is Netaji Subhash Chandra Bose Road. The promenade is lined with palm trees. At the northern end of Marine Drive is Chowpatty Beach. This is a popular beach famed for its Bhel Puri. Many restaurants also line this stretch of the road. Further down this road lies Walkeshwar, a wealthy neighborhood of the city, also home to the Governor of Maharashtra.
+              </div>
+              </div>
+              <div class="column" style="background-color: lavenderblush">
+                <img src="MarineDrive.jpg" alt="Marine Drive" width="700" height="600" />
+              </div>
+              <div class="column" style="background-color: lavender">
+                For More Information Click on below links:
+                <br />
+                <li>
+                  <a href="https://en.wikipedia.org/wiki/Western_Ghats"
+                    >WikiPedia</a>
+                </li>
+    
+                <li><a href="https://whc.unesco.org/en/list/1342/">UNESCO</a></li>
+    
+                <li>
+                  <a
+                    href="https://timesofindia.indiatimes.com/travel/destinations/ch c
+    asing-the-monsoons-in-the-western-ghats-of-karnataka/articleshow/52 c
+    652645.cms"
+                    >Times Of India</a
+                  >
+                </li>
+              </div>
+            </div>
+          </div>
+        </main>
+    
+        <div class="container-fluid">
+          <div class="footer"></div>
+        </div>
+      </body>
+    </html>
+    
+

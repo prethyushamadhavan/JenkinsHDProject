@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>Task 4.1</title>
+        <meta name="author" content="Prethyusha Madhavan">
+        <meta charset="UTF-8">
+        <meta name="description" content="Home">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet">
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <style>
+    
+     .header{
+       max-width: fit-content;
+      }
+      .footer {
+        background-color: #343a40;
+        color: white;
+        padding: 10px;
+      }
+
+      .footer {
+        text-align: center;
+      }
+
+      .footer .container {
+        display: inline-block;
+      }
+
+      #flowerImages .img-thumbnail {
+        height: 250px; 
+        object-fit: cover; 
+      }
+
+  
+.navbar {
+      padding: 10px 0; 
+    }
+
+    .navbar-nav .nav-link {
+      font-weight: bold;
+      padding: 0 15px; 
+    }
+
+    i {
+    font-style: italic;
+    color: red;
+    background-color: lightyellow;
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+    </style>
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="#">Lilies</a>
+                <button class="navbar-toggler" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse"
+                    id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#flowers">Introduction</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#imagesWithText">Flowers</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#flowerData">Flower
+                                Table</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"
+                                href="https://en.wikipedia.org/wiki/Lilium">More</a>
+                        </li>
+                        <li class="nav-item">
+                            <form class="d-flex">
+                                <input class="form-control me-2" type="search"
+                                    placeholder="Search" aria-label="Search">
+                                <button class="btn btn-outline-success"
+                                    type="submit">Search</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container-fluid p-4 bg-primary-subtle text-black">
+            <div class="container-lg">
+                <h1>Flowers of the World</h1>
+                <p>Some beautiful colorful pictures of flowers</p>
+            </div>
+        </div>
+
+        <div id="carouselExampleFade" class="carousel slide carousel-fade"
+            data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="11.jpg" class="d-block w-100" alt="Slide 1"
+                        style="max-height: 300px;">
+                    <div class="carousel-caption d-none d-md-block"
+                        style="color: white; background-color: rgba(0, 0, 0, 0.5); padding: 10px;">
+                        <p style="font-weight: bold;">Altari – Orienpet Lilies</p>
+                        <span class="text-white"
+                            style="position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); font-size: 12px;">1
+                            of 4</span>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="2.jpg" class="d-block w-100" alt="Slide 2"
+                        style="max-height: 300px;">
+                    <div class="carousel-caption d-none d-md-block"
+                        style="color: white; background-color: rgba(0, 0, 0, 0.5); padding: 10px;">
+                        <p style="font-weight: bold;">Anastasia – Orienpet
+                            Lilies</p>
+                        <span class="text-white"
+                            style="position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); font-size: 12px;">2
+                            of 4</span>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="13.jpg" class="d-block w-100" alt="Slide 3"
+                        style="max-height: 300px;">
+                    <div class="carousel-caption d-none d-md-block"
+                        style="color: white; background-color: rgba(0, 0, 0, 0.5); padding: 10px;">
+                        <p style="font-weight: bold;">Arabian Knight – Martagon
+                            Lily</p>
+                        <span class="text-white"
+                            style="position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); font-size: 12px;">3
+                            of 4</span>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="4.jpg" class="d-block w-100" alt="Slide 4"
+                        style="max-height: 300px;">
+                    <div class="carousel-caption d-none d-md-block"
+                        style="color: white; background-color: rgba(0, 0, 0, 0.5); padding: 10px;">
+                        <p style="font-weight: bold;">Black Spider – Asiatic
+                            Lily</p>
+                        <span class="text-white"
+                            style="position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); font-size: 12px;">4
+                            of 4</span>
+                    </div>
+                </div>
+            </div>
+
+            <button class="carousel-control-prev" type="button"
+                data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+                <span class="carousel-control-text" style="color: white;">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button"
+                data-bs-target="#carouselExampleFade" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+                <span class="carousel-control-text" style="color: white;">Next</span>
+            </button>
+        </div>
+
+        <div id="flowers" class="container mt-4">
+            <h2>Introduction to Flower - Lilies!</h2>
+            <p>
+                Lilium (/ˈlɪliəm/ LIL-ee-əm) is a genus of herbaceous flowering
+                plants growing from bulbs, all with large prominent flowers.
+                They are the true lilies. Lilies are a group of flowering plants
+                which are important in culture and literature in much of the
+                world. Most species are native to the Northern Hemisphere and
+                their range is temperate climates and extends into the
+                subtropics. Many other plants have "lily" in their common names,
+                but do not belong to the same genus and are therefore not true
+                lilies.
+            </p>
+            <p>
+                The flowers are large, often fragrant, and come in a wide range
+                of colors including whites, yellows, oranges, pinks, reds and
+                purples. Markings include spots and brush strokes. The plants
+                are late spring- or summer-flowering. Flowers are borne in
+                racemes or umbels at the tip of the stem, with six tepals
+                spreading or reflexed, to give flowers varying from funnel shape
+                to a "Turk's cap". The tepals are free from each other, and bear
+                a nectary at the base of each flower. The ovary is 'superior',
+                borne above the point of attachment of the anthers. The fruit is
+                a three-celled capsule.<br><br>
+
+                <i>For Taxanomy information click the button below for detailed information!</i>
+            </p>
+
+        </div>
+
+        <div class="container mt-4">
+            <button class="btn btn-primary" type="button"
+                data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
+                aria-controls="offcanvasExample">
+                Taxanomy
+            </button>
+            <div class="offcanvas offcanvas-start" tabindex="-1"
+                id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Taxanomy</h5>
+                    <button type="button" class="btn-close text-reset"
+                        data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    Taxonomical division in sections follows the classical
+                    division of Comber,[8] species acceptance follows the World
+                    Checklist of Selected Plant Families,[9] the taxonomy of
+                    section Pseudolirium is from the Flora of North America,[10]
+                    the taxonomy of Section Liriotypus is given in consideration
+                    of Resetnik et al. 2007,[11] the taxonomy of Chinese species
+                    (various sections) follows the Flora of China[12] and the
+                    taxonomy of Section Sinomartagon follows Nishikawa et
+                    al.[13] as does the taxonomy of Section Archelirion.[14]<br>
+
+                    The World Checklist of Selected Plant Families, as of
+                    January 2014, considers Nomocharis a separate genus in its
+                    own right,[15] however some authorities consider Nomocharis
+                    to be embedded within Lilium, rather than treat it as a
+                    separate genus.[16][17] The Sinomartagon are divided in 3
+                    paraphyletic groups, while the Leucolirion are divided in 2
+                    paraphyletic groups.[18]<br>
+
+                    There are seven sections:<br>
+
+                    Martagon<br>
+                    Pseudolirium<br>
+                    Liriotypus<br>
+                    Archelirion<br>
+                    Sinomartagon<br>
+                    Leucolirion<br>
+                    Daurolirion<br>
+                    There are 111 species counted in this genus.[19] For a full
+                    list of accepted species[1] with their native ranges, see
+                    List of Lilium species. <br>
+
+                    Some species formerly included within this genus have now been placed in other genera. These genera include Cardiocrinum, Notholirion, Nomocharis and Fritillaria.
+                </div>
+            </div>
+
+            <div class="container mt-4">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <img src="1.jpg" class="card-img-top"
+                                alt="Card Image 1"
+                                style="height: 300px; width: 400px;">
+                            <div class="card-body">
+                                <h5 class="card-title">Asiatic hybrids</h5>
+                                <p class="card-text">Asiatic lilies and their
+                                    hybrids can be star-shaped and upward
+                                    facing, star-shaped and outward facing or
+                                    downward facing with petals that curve
+                                    backwards. The double-petaled varieties are
+                                    truly stunning and a wonderful alternative
+                                    for those of us with pollen allergies. These
+                                    hybrids are typically easy to care for, and
+                                    their main flowering time is July.
+                                </p>
+                                <a
+                                    href="https://plants.ces.ncsu.edu/plants/lilium-asiatic-hybrids/"
+                                    class="btn btn-primary">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <img src="20.jpg" class="card-img-top"
+                                alt="Card Image 2"
+                                style="height: 300px; width: 400px;">
+                            <div class="card-body">
+                                <h5 class="card-title">African Queen – Trumpet
+                                    Lilies</h5>
+                                <p class="card-text">These exquisite
+                                    trumpet-shaped flowers are apricot-orange in
+                                    color and highly fragrant. This type of lily
+                                    grows to be between 36″ and 40″ in height.
+                                    African queen trumpet lilies make an elegant
+                                    statement in any summer garden.
+                                </p>
+                                <a
+                                    href="https://www.gardenia.net/plant/lilium-african-queen-lily"
+                                    class="btn btn-primary">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="imagesWithText" class="container mt-4">
+                <h2>Lets look at some types of lilies and its pictures below..</h2>
+                <p>
+                    Lilies are one of the best-known ornamental plants. In this
+                    article, we list some of the most popular lily species as
+                    well as which lilies are hardy.
+                </p>
+                <ul>
+                    <li> <strong>Asiatic hybrids:</strong> Asiatic lilies and
+                        their hybrids can be star-shaped and upward facing,
+                        star-shaped and outward facing or downward facing with
+                        petals that curve backwards. The double-petaled
+                        varieties are truly stunning and a wonderful alternative
+                        for those of us with pollen allergies. These hybrids are
+                        typically easy to care for, and their main flowering
+                        time is July.</li>
+                    <li><strong>Tiger lily:</strong> This Asian lily species is
+                        hardy and undemanding in regard to location. Tiger lily
+                        plants rarely grow higher than a metre. They thrive in
+                        full sun, partial shade and even full shade. These
+                        lilies typically flower from June to August and are best
+                        known for their brightly-coloured and highly-speckled
+                        flowers.</li>
+                    <li><strong>Turk’s cap lily:</strong> Turk’s cap lilies,
+                        also called martagon lilies, have small flowers that
+                        hang downwards and are known for their curled back
+                        petals that are reminiscent of a turban. The plants grow
+                        up to 2m tall and bloom from June to August. Their
+                        lovely scent envelopes the whole garden especially in
+                        the evening hours. Turk’s cap lilies are a lovely
+                        addition to rock gardens.</li>
+                </ul>
+            </p>
+            <div id="flowerImages" class="container mt-4">
+                <div class="row">
+                    <div class="col-sm-4 col-12">
+                        <img src="1.jpg" alt="Flower 1"
+                            class="img-thumbnail img-fluid">
+                    </div>
+                    <div class="col-sm-4 col-12">
+                        <img src="8.jpg" alt="Flower 2"
+                            class="img-thumbnail img-fluid">
+                    </div>
+                    <div class="col-sm-4 col-12">
+                        <img src="7.jpg" alt="Flower 3"
+                            class="img-thumbnail img-fluid">
+                    </div>
+                </div>
+                <p class="text-center"><a href="#"><i>Top</i></a></p>
+            </div>
+        </div>
+
+        <div id="flowerWithText" class="container mt-4">
+            <div class="p-4 bg-light rounded">
+                <div class="row">
+                    <div class="col-sm-4 col-12">
+                        <img src="9.webp" alt="Flower"
+                            class="img-thumbnail img-fluid">
+                    </div>
+                    <div class="col-sm-8 col-12">
+                        <h2 style="background-color: #f8d7da; color: #721c24; padding: 8px;">LILIUM ‘RED VELVET' </h2>
+                        <p>
+                            <strong>Hardiness:</strong> USDA 3a-8b</p>
+                        <p><strong> Height: </strong> &nbsp; 48in (120cm) </p>
+                        <p> A hybrid Asiatic tiger lily, producing plenty of
+                            large, scarlet, freckled flowers, which are stunning
+                            but unscented. The slightly upswept petals are a
+                            little like the smaller Turk’s cap varieties.
+                        </p>
+                        <p>
+                            With the capacity to carry up to 20 blooms per stem
+                            and a long-flowering period, they make a great
+                            accent plant for hot-colored garden border planting
+                            ideas. Try combining them with tall eremurus
+                            (foxtail lilies) for contrast. This is one of the
+                            types of lilies that prefer well-drained alkaline
+                            soil types.
+
+                            For those interested in cultural experiences, the
+                            Nilgiri Hills in Karnataka are also home to
+                            indigenous communities with distinct traditions and
+                            practices. Exploring the local culture provides
+                            visitors with a deeper understanding of the
+                            harmonious coexistence between nature and human life
+                            in this enchanting part of Karnataka.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center"><a href="#"><i>Top</i></a></p>
+        </div>
+
+        <div id="Asiatichybrids" class="container mt-4">
+
+            <div class="p-4 bg-light rounded">
+                <div class="row">
+                    <div class="col-sm-8 col-12">
+                        <h2 style="background-color: #f8d7da; color: #721c24; padding: 8px;">LILIUM ‘CASA BLANCA’</h2>
+                        <p>
+                            <strong>Hardiness:</strong> USDA 4-9</p>
+                        <p><strong> Height: </strong> &nbsp; 48in (120cm) </p>
+                        <p>
+                            With the purest of white flowers, ‘Casa Blanca’ is
+                            widely regarded to be one of the best white oriental
+                            lilies, flowering for around four weeks in late
+                            summer to early fall.
+                        </p>
+                        <p>
+                            The flowers are scented so great for planting near a
+                            seating area or for cutting and enjoying indoors.
+                            They look good planted in groups through a mixed
+                            border but will also suit larger pots as part of
+                            your container gardening ideas. This type of lily
+                            prefers slightly acidic soils.
+                        </p>
+                    </div>
+                    <div class="col-sm-4 col-12">
+                        <img src="2.jpg" alt="Flowers"
+                            class="img-fluid img-thumbnail">
+                    </div>
+                </div>
+            </div>
+            <p class="text-center"><a href="#"><i>Top</i></a></p>
+        </div>
+
+        <div class="container mt-4">
+            <div class="p-4 bg-light rounded">
+                <div class="row">
+                    <div class="col-sm-8 col-12">
+                        <h2 style="background-color: #f8d7da; color: #721c24; padding: 8px;"> LILIUM ‘NIGHTRIDER’</h1>
+                        <p>
+                            <strong>Hardiness:</strong> USDA 3a-8b</p>
+                        <p><strong> Height: </strong> &nbsp; 36in (90cm) </p>
+                        <p>
+                            The intense, glossy, almost black, flowers of this
+                            new hybrid are very dramatic and make a great for
+                            contrast with hot summer colors.
+                            <p>
+                                Flowering through mid to late summer, this
+                                variety looks stunning combined with dahlias,
+                                echinacea and rudbeckia, or other lilies.
+                                Slightly shorter that other types of lilies, it
+                                is one of the best plants for small gardens and
+                                also works well in pots. </p>
+                            
+                        </div>
+                        <div class="col-sm-4 col-12">
+                            <img src="10.webp" alt="Flowers"
+                                class="img-fluid img-thumbnail float-start">
+                        </div>
+                    </div>
+                </div>
+                <p class="text-center"><a href="#"><i>Top</i></a></p>
+            </div>
+            <div id="flowerData" class="container mt-4">
+                <h2>Categorising different flower species.</h2>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <caption>2023 &copy; Lilies Images</caption>
+                        <thead class="table-success">
+                            <tr>
+                                <th scope="col">Species</th>
+                                <th scope="col">Start Year</th>
+                                <th scope="col">No. years with Index in 2021</th>
+                                <th scope="col">No. sites monitored in 2021</th>
+                                <th scope="col">2021 rank</th>
+                                <th scope="col"> % change 2020-2021</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Swallowtail</td>
+                                <td>1976</td>
+                                <td>45</td>
+                                <td>16</td>
+                                <td>23</td>
+                                <td>-24</td>
+                            </tr>
+                            <tr>
+                                <td>Dinky Skipper</td>
+                                <td>1976</td>
+                                <td>46</td>
+                                <td>637</td>
+                                <td>13</td>
+                                <td>-11</td>
+                            </tr>
+                            <tr>
+                                <td>Grizzled Skipper</td>
+                                <td>1976</td>
+                                <td>46</td>
+                                <td>404</td>
+                                <td>31</td>
+                                <td>-17</td>
+                            </tr>
+                            <tr>
+                                <td>Essex Skipper</td>
+                                <td>1977</td>
+                                <td>45</td>
+                                <td>1918</td>
+                                <td>39</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td>Lulworth Skipper</td>
+                                <td>1992</td>
+                                <td>30</td>
+                                <td>23</td>
+                                <td>20</td>
+                                <td>-13</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-center"><a href="#"><i>Top</i></a></p>
+            </div>
+
+            <div class="container mt-4">
+                <div class="card border-0">
+                  <img src="8.jpg" class="card-img-top" alt="Card Image" style="max-width: 50%; height: auto;">
+                  <div class="card-body">
+                    <h5 class="card-title"> Lilium Martagon (Martagon Lily) </h5>
+                    <p class="card-text"></div>
+                      <div class="container mt-4">
+                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                           Click to know about Lilium Martagon
+                        </button>
+                        <div class="collapse" id="collapseExample">
+                          <div class="card card-body">
+                           <p>L. martagon is one of those plants that gardeners adore because of its ability to ‘go native’ and establish itself for many years (if not decades). It’s also one of the few lily species to genuinely enjoy light shade, and it has passed this useful trait onto many of its hybrids.
+
+                            The original L. martagon is soft purple to pink in color but is also available in an albino white form. The pendent blooms hang down in a Turk’s Cap shape, curving right back on themselves to touch the base of the flower.
+                            
+                            Freckles are often (but not always) present on the blooms, and the foliage is sparse. This is more than made up for by the abundant flowers, however.
+                            
+                            L. martagon is not fussy about soils and won’t be upset if you have a touch of lime in your local area. We recommend L. martagon for a more naturalistic planting scheme, as she fits in beautifully with a cottage garden style planting scheme.
+                           </p>
+                          </p>
+                          </div>
+                        </div>
+                      </div>
+            
+                </div>
+              </div>
+
+            <div class="footer">
+                <div class="container">
+                    <p> 2023 &copy; Your Web Page. All rights reserved.</p>
+                </div>
+            </div>
+        </body>
+    </html>

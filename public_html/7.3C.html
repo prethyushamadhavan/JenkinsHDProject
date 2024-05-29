@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> FORM VALIDATION</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .error-message {
+            color: red;
+        }
+ 
+        .valid-feedback {
+            display: none;
+            color: green;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+        }
+
+        label {
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .error-message {
+            font-size: 12px;
+            color: #e74c3c;
+            margin-top: 5px;
+        }
+
+        .valid-feedback {
+            color: #4caf50;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>FORM VALIDATION</h1>
+        <h2>Online Form Validation Form</h2>
+        <p>Please enter your contact details into the form below to register your interest in receving support with a given unit. Please make sure you use the correct format when inputting your data</p>
+        <form name="myForm" onsubmit="return validationForm()">
+            <div class="form-group">
+                <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" name="name" />
+            <span id="namemsg" class="error-message"></span>
+                <div class="valid-feedback" id="nameValid">✓ Valid</div>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="text" class="form-control" id="email" name="email" />
+                <span id="emailmsg" class="error-message"></span>
+                <div class="valid-feedback" id="emailValid">✓ Valid</div>
+            </div>
+            <div class="form-group">
+                <label for="unitcode">Deakin Unit:</label>
+                <input type="text" class="form-control" id="unitcode" name="unitcode" />
+                <span id="unitcodemsg" class="error-message"></span>
+                <div class="valid-feedback" id="unitcodeValid">✓ Valid</div>
+            </div>
+            <div class="form-group">
+                <label for="phonenumber">Phone Number:</label>
+                <input type="text" class="form-control" id="phonenumber" name="phonenumber" />
+                <span id="phonenumbermsg" class="error-message"></span>
+                <div class="valid-feedback" id="phonenumberValid">✓ Valid</div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Query</button>
+            <button type="reset" class="btn btn-secondary" onclick="resetForm()">Reset</button>
+        </form>
+    </div>
+ 
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+ 
+    <script>
+        function validationForm() {
+            resetData();
+ 
+            let name = document.getElementById("name").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let unitCode = document.getElementById("unitcode").value.trim();
+            let phoneNumber = document.getElementById("phonenumber").value.trim();
+            let errors = false;
+ 
+            if (name === "") {
+                document.getElementById("namemsg").innerHTML = "Please enter your name";
+                errors = true;
+            } else {
+                document.getElementById("nameValid").style.display = "block";
+                document.getElementById("name").classList.add("is-valid");
+            }
+ 
+            if (email === "") {
+                document.getElementById("emailmsg").innerHTML = "Please enter your email";
+                errors = true;
+            } else if (!email.endsWith("@deakin.edu.au")) {
+                document.getElementById("emailmsg").innerHTML = "Please enter a valid Deakin email address";
+                errors = true;
+            } else {
+                document.getElementById("emailValid").style.display = "block";
+                document.getElementById("email").classList.add("is-valid");
+            }
+ 
+            if (unitCode === "") {
+                document.getElementById("unitcodemsg").innerHTML = "Please enter your Deakin Unit Code";
+                errors = true;
+            } else if (!/^[A-Za-z]{3}[0-9]{3}$/.test(unitCode)) {
+                document.getElementById("unitcodemsg").innerHTML = "Deakin Unit Code MUST BE 'ABC123' ";
+                errors = true;
+            } else {
+                document.getElementById("unitcodeValid").style.display = "block";
+                document.getElementById("unitcode").classList.add("is-valid");
+            }
+ 
+            // Validate Phone Number
+            if (phoneNumber === "") {
+                document.getElementById("phonenumbermsg").innerHTML = "Please enter your phone number";
+                errors = true;
+            } else if (!/^\d{10}$/.test(phoneNumber)) {
+                let invalidCharacter = phoneNumber.match(/\D/);
+                document.getElementById("phonenumbermsg").innerHTML = `Please enter a valid phone number (Error: '${invalidCharacter}' is not a valid digit)`;
+                errors = true;
+            } else {
+                document.getElementById("phonenumberValid").style.display = "block";
+                document.getElementById("phonenumber").classList.add("is-valid");
+            }
+ 
+            return !errors;
+        }
+ 
+        function resetForm() {
+           
+            resetData();
+            document.getElementById("name").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("unitcode").value = "";
+            document.getElementById("phonenumber").value = "";
+        }
+ 
+        function resetData() {
+            let inputs = document.getElementsByTagName("input");
+            for (let i = 0; i < inputs.length; i++) {
+                inputs[i].classList.remove("is-valid");
+            }
+ 
+            let feedbackElements = document.getElementsByClassName("valid-feedback");
+            for (let i = 0; i < feedbackElements.length; i++) {
+                feedbackElements[i].style.display = "none";
+            }
+ 
+            document.getElementById("namemsg").innerHTML = "";
+            document.getElementById("emailmsg").innerHTML = "";
+            document.getElementById("unitcodemsg").innerHTML = "";
+            document.getElementById("phonenumbermsg").innerHTML = "";
+        }
+    </script>
+</body>
+</html>

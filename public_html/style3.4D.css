@@ -1,0 +1,44 @@
+body {
+     font-family: Arial, Helvetica, sans-serif;
+     }
+    
+     .header {
+     background-color: #f1f1f1;
+     padding: 30px;
+     font-size: 35px;
+     text-align: center;
+     color:White;
+     }
+
+     h1{
+        background-image: url("Marine_BG.jpg");
+        background-size: contain;
+        color: rgb(175, 83, 83);
+     }
+
+    
+    
+    
+     .footer {
+     background-color: #f1f1f1;
+    padding: 30px;
+     font-size: 10px;
+     position: relative;
+     bottom: 0;
+     width: 100%;
+     }
+    
+    
+ img {
+     width: 100.33%;
+    
+     height: 48
+ }
+
+
+  .footer p {
+    color: firebrick;
+    font-style: italic;
+    text-align: center;
+    margin: 0.1em;
+  }

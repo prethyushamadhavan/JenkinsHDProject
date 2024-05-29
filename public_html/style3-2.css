@@ -1,0 +1,58 @@
+html {
+  font-family: "Exo", Garamond, Georgia, sans-serif;
+}
+
+h1 {
+  text-align: center;
+  font-size: 1.8em;
+  color: #d4b506;
+  font-family: "Rosario", Tahoma, Verdana, sans-serif;
+  background-color: white;
+  padding: 0.8em;
+  letter-spacing: 0.2em;
+}
+
+h2,
+h3 {
+  font-family: "Rosario", Tahoma, Verdana, sans-serif;
+  background-color: rgb(6, 97, 201);
+  color: white;
+  padding: 0.3em 0.8em 0.3em 0.8em;
+}
+
+body {
+  background-color: rgb(201, 230, 241);
+}
+
+section {
+  margin: 0.8em;
+}
+
+nav {
+  margin: 1.5em;
+  font-family: "Karla", Verdana, Tahoma, sans-serif;
+  font-weight: 900;
+}
+
+footer {
+  color: firebrick;
+  font-size: 1em;
+  font-style: italic;
+  text-align: center;
+}
+footer p {
+  margin: 0.1em;
+}
+
+.highlight {
+  background-color: yellow;
+  font-weight: bold;
+}
+
+p {
+  font-size: 1.2em;
+}
+
+a {
+  font-size: 1.2em;
+}

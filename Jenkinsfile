@@ -5,6 +5,7 @@ pipeline {
         DOCKER_IMAGE = 'my-node-app'
         SONARQUBE_URL = 'http://localhost:9000'
         SONARQUBE_TOKEN = 'squ_fec78446cff9d7006cf3058bb320c20f35aefccb'
+        CYPRESS_CACHE_FOLDER = 'C:\\CypressCache'
     }
 
     triggers {
@@ -56,7 +57,10 @@ pipeline {
         }
         stage('Run Cypress Tests') {
             steps {
-                bat 'npx cypress run --config video=false --env timeout=60000'
+                script {
+                    bat 'dir cypress/e2e'  // List contents to verify the test file is present
+                    bat 'npx cypress run --config baseUrl=http://localhost:3000'
+                }
             }
         }
         stage('Code Quality Analysis') {

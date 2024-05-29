@@ -47,7 +47,9 @@ pipeline {
         }
         stage('Run Cypress Tests') {
             steps {
-                bat 'npx cypress run'
+                script {
+                    bat 'npx cypress run --config video=false --env timeout=60000'
+                }
             }
         }
         stage('Code Quality Analysis') {

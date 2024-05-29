@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cypress run"
   },
   "keywords": [
     "node",
@@ -18,5 +18,8 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "cypress": "^10.0.0"
   }
 }

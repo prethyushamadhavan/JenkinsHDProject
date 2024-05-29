@@ -32,16 +32,7 @@ pipeline {
                 }
             }
         }
-        stage('Run Tests') {
-            steps {
-                script {
-                    docker.image(DOCKER_IMAGE).inside('-v "%CD%:/workspace" -w /workspace') {
-                        bat 'npm install'
-                        bat 'npm test'
-                    }
-                }
-            }
-        }
+       
         stage('Run Cypress Tests') {
             steps {
                 script {

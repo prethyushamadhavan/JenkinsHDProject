@@ -39,30 +39,28 @@ pipeline {
                 }
             }
         }
+        stage('Run Tests') {
+            steps {
+                bat 'npm install'
+                bat 'npm test'
+            }
+        }
         stage('Run Cypress Tests') {
             steps {
-                script {
-                    def workspace = pwd().replace('\\', '/').toLowerCase()
-                    docker.image("${DOCKER_IMAGE}").inside("-v ${workspace}:/workspace -w /workspace") {
-                        bat 'npx cypress run'
-                    }
-                }
+                bat 'npx cypress run'
             }
         }
         stage('Code Quality Analysis') {
             steps {
                 script {
-                    def workspace = pwd().replace('\\', '/').toLowerCase()
-                    docker.image('sonarsource/sonar-scanner-cli').inside("-v ${workspace}:/workspace -w /workspace") {
-                        withSonarQubeEnv('SonarQube') {
-                            bat """
-                                sonar-scanner \
-                                -Dsonar.projectKey=my-node-app \
-                                -Dsonar.sources=. \
-                                -Dsonar.host.url=${SONARQUBE_URL} \
-                                -Dsonar.login=${SONARQUBE_TOKEN}
-                            """
-                        }
+                    withSonarQubeEnv('SonarQube') {
+                        bat """
+                            sonar-scanner \
+                            -Dsonar.projectKey=my-node-app \
+                            -Dsonar.sources=. \
+                            -Dsonar.host.url=${SONARQUBE_URL} \
+                            -Dsonar.login=${SONARQUBE_TOKEN}
+                        """
                     }
                 }
             }

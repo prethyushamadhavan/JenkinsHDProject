@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKER_IMAGE = 'my-node-app'
         SONARQUBE_URL = 'http://localhost:9000'
-        SONARQUBE_TOKEN = 'your-sonarqube-token-here'
+        SONARQUBE_TOKEN = 'squ_fec78446cff9d7006cf3058bb320c20f35aefccb'
     }
 
     triggers {

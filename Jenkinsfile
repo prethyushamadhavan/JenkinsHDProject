@@ -59,7 +59,7 @@ pipeline {
             steps {
                 script {
                     bat 'dir cypress/e2e'  // List contents to verify the test file is present
-                    bat 'npx cypress run --config baseUrl=http://localhost:3000'
+                    bat 'npx cypress run --config baseUrl=http://localhost:3000/Website.html'
                 }
             }
         }

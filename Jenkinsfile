@@ -32,11 +32,18 @@ pipeline {
                 }
             }
         }
-       
+        stage('Print Working Directory') {
+            steps {
+                script {
+                    bat 'echo %CD%'
+                }
+            }
+        }
         stage('Run Cypress Tests') {
             steps {
                 script {
-                    docker.image(DOCKER_IMAGE).inside('-v "%CD%:/workspace" -w /workspace') {
+                    def workspace = pwd()
+                    docker.image(DOCKER_IMAGE).inside("-v ${workspace}:/workspace -w /workspace") {
                         bat 'npx cypress run'
                     }
                 }
@@ -45,7 +52,8 @@ pipeline {
         stage('Code Quality Analysis') {
             steps {
                 script {
-                    docker.image('sonarsource/sonar-scanner-cli').inside('-v "%CD%:/workspace" -w /workspace') {
+                    def workspace = pwd()
+                    docker.image('sonarsource/sonar-scanner-cli').inside("-v ${workspace}:/workspace -w /workspace") {
                         withSonarQubeEnv('SonarQube') {
                             bat """
                                 sonar-scanner \

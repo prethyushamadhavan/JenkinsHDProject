@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKER_IMAGE = 'my-node-app'
         SONARQUBE_URL = 'http://localhost:9000'
-        SONARQUBE_TOKEN = 'squ_fec78446cff9d7006cf3058bb320c20f35aefccb'
+        SONARQUBE_TOKEN = 'your-sonarqube-token-here'
     }
 
     triggers {
@@ -12,16 +12,16 @@ pipeline {
     }
 
     stages {
-        stage('Clone repository') {
+        stage('Checkout SCM') {
             steps {
-                git branch: 'main', url: 'https://github.com/prethyushamadhavan/WebProject.git'
+                checkout scm
             }
         }
         stage('Verify Docker Setup') {
             steps {
                 script {
-                    sh 'docker --version'
-                    sh 'docker ps'
+                    bat 'docker --version'
+                    bat 'docker ps'
                 }
             }
         }
@@ -36,8 +36,8 @@ pipeline {
             steps {
                 script {
                     docker.image(DOCKER_IMAGE).inside {
-                        sh 'npm install'
-                        sh 'npm test'
+                        bat 'npm install'
+                        bat 'npm test'
                     }
                 }
             }
@@ -46,7 +46,7 @@ pipeline {
             steps {
                 script {
                     docker.image(DOCKER_IMAGE).inside {
-                        sh 'npx cypress run'
+                        bat 'npx cypress run'
                     }
                 }
             }
@@ -56,7 +56,7 @@ pipeline {
                 script {
                     docker.image('sonarsource/sonar-scanner-cli').inside {
                         withSonarQubeEnv('SonarQube') {
-                            sh """
+                            bat """
                                 sonar-scanner \
                                 -Dsonar.projectKey=my-node-app \
                                 -Dsonar.sources=. \

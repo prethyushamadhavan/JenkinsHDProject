@@ -28,7 +28,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build(DOCKER_IMAGE)
+                    docker.build("${DOCKER_IMAGE}")
                 }
             }
         }
@@ -42,8 +42,8 @@ pipeline {
         stage('Run Cypress Tests') {
             steps {
                 script {
-                    def workspace = pwd()
-                    docker.image(DOCKER_IMAGE).inside("-v ${workspace}:/workspace -w /workspace") {
+                    def workspace = pwd().replace('\\', '/')
+                    docker.image("${DOCKER_IMAGE}").inside("-v ${workspace}:/workspace -w /workspace") {
                         bat 'npx cypress run'
                     }
                 }
@@ -52,7 +52,7 @@ pipeline {
         stage('Code Quality Analysis') {
             steps {
                 script {
-                    def workspace = pwd()
+                    def workspace = pwd().replace('\\', '/')
                     docker.image('sonarsource/sonar-scanner-cli').inside("-v ${workspace}:/workspace -w /workspace") {
                         withSonarQubeEnv('SonarQube') {
                             bat """
@@ -70,7 +70,7 @@ pipeline {
         stage('Deploy to Test Environment') {
             steps {
                 script {
-                    docker.build(DOCKER_IMAGE).run('-d -p 3000:3000')
+                    docker.build("${DOCKER_IMAGE}").run('-d -p 3000:3000')
                 }
             }
         }

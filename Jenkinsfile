@@ -35,7 +35,7 @@ pipeline {
         stage('Run Tests') {
             steps {
                 script {
-                    docker.image(DOCKER_IMAGE).inside {
+                    docker.image(DOCKER_IMAGE).inside('-v "%CD%:/workspace" -w /workspace') {
                         bat 'npm install'
                         bat 'npm test'
                     }
@@ -45,7 +45,7 @@ pipeline {
         stage('Run Cypress Tests') {
             steps {
                 script {
-                    docker.image(DOCKER_IMAGE).inside {
+                    docker.image(DOCKER_IMAGE).inside('-v "%CD%:/workspace" -w /workspace') {
                         bat 'npx cypress run'
                     }
                 }
@@ -54,7 +54,7 @@ pipeline {
         stage('Code Quality Analysis') {
             steps {
                 script {
-                    docker.image('sonarsource/sonar-scanner-cli').inside {
+                    docker.image('sonarsource/sonar-scanner-cli').inside('-v "%CD%:/workspace" -w /workspace') {
                         withSonarQubeEnv('SonarQube') {
                             bat """
                                 sonar-scanner \

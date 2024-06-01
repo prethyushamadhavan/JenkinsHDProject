@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        DOCKER_IMAGE = 'my-node-app'
+        DOCKER_IMAGE = 'prethyusha/my-node-app'
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
     }
     stages {
@@ -10,6 +10,8 @@ pipeline {
                 script {
                     // Login to Docker Hub
                     withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'DOCKERHUB_PSW', usernameVariable: 'DOCKERHUB_USR')]) {
+                        echo "Docker Username: ${DOCKERHUB_USR}"
+                        echo "Attempting Docker Login"
                         bat "echo %DOCKERHUB_PSW% | docker login -u %DOCKERHUB_USR% --password-stdin"
                     }
                     // Build the Docker image

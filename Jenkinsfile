@@ -8,10 +8,9 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    // Login to Docker Hub
+                    // Login to Docker Hub using PAT
                     withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'DOCKERHUB_PSW', usernameVariable: 'DOCKERHUB_USR')]) {
                         echo "Docker Username: ${DOCKERHUB_USR}"
-                        echo "Password Length: ${DOCKERHUB_PSW.length()}"  // This is for debugging purposes only
                         echo "Attempting Docker Login"
                         bat """
                         echo ${DOCKERHUB_PSW} | docker login -u ${DOCKERHUB_USR} --password-stdin

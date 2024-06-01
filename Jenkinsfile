@@ -4,7 +4,7 @@ pipeline {
         DOCKER_IMAGE = 'prethyusha/my-node-app'
         SONAR_PROJECT_KEY = 'my-node-app' // Use the project key you created
         SONAR_HOST_URL = 'http://localhost:9000'
-        SONAR_LOGIN = credentials('11') // Use the correct credential ID for SonarQube token
+        SONAR_LOGIN = credentials('SonarQube token') // Use the correct credential ID for SonarQube token
     }
     stages {
         stage('Build') {

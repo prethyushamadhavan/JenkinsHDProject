@@ -9,50 +9,58 @@ pipeline {
             steps {
                 script {
                     // Login to Docker Hub
-                    sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'DOCKERHUB_PSW', usernameVariable: 'DOCKERHUB_USR')]) {
+                        bat "echo %DOCKERHUB_PSW% | docker login -u %DOCKERHUB_USR% --password-stdin"
+                    }
                     // Build the Docker image
-                    def app = docker.build("${DOCKER_IMAGE}:latest")
+                    bat "docker build -t ${DOCKER_IMAGE}:latest ."
                     // Push the Docker image to Docker Hub
-                    app.push()
+                    bat "docker push ${DOCKER_IMAGE}:latest"
                     // Logout from Docker Hub
-                    sh "docker logout"
+                    bat "docker logout"
                 }
             }
         }
         stage('Test') {
             steps {
-                echo 'Running Cypress Tests...'
-                sh 'npm install'
-                sh 'npx cypress run'
+                script {
+                    bat 'npm install'
+                    bat 'npx cypress run'
+                }
             }
         }
         stage('Code Quality Analysis') {
             steps {
-                echo 'Running Code Quality Analysis...'
                 script {
                     def scannerHome = tool 'SonarQube Scanner'
                     withSonarQubeEnv('My SonarQube Server') {
-                        sh "${scannerHome}/bin/sonar-scanner"
+                        bat "${scannerHome}/bin/sonar-scanner"
                     }
                 }
             }
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying...'
-                // Add your deployment commands here
+                script {
+                    // Add your deployment commands here
+                    echo 'Deploying...'
+                }
             }
         }
         stage('Release') {
             steps {
-                echo 'Releasing...'
-                // Add your release commands here
+                script {
+                    // Add your release commands here
+                    echo 'Releasing...'
+                }
             }
         }
         stage('Monitoring and Alerting') {
             steps {
-                echo 'Monitoring and Alerting...'
-                // Add your monitoring and alerting commands here
+                script {
+                    // Add your monitoring and alerting commands here
+                    echo 'Monitoring and Alerting...'
+                }
             }
         }
     }

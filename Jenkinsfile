@@ -22,14 +22,6 @@ pipeline {
                 }
             }
         }
-        stage('Start Server') {
-            steps {
-                script {
-                    bat 'npm start &'
-                    bat 'timeout /t 10'
-                }
-            }
-        }
         stage('Test') {
             steps {
                 script {

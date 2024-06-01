@@ -11,9 +11,10 @@ pipeline {
                     // Login to Docker Hub
                     withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'DOCKERHUB_PSW', usernameVariable: 'DOCKERHUB_USR')]) {
                         echo "Docker Username: ${DOCKERHUB_USR}"
+                        echo "Password Length: ${DOCKERHUB_PSW.length()}"  // This is for debugging purposes only
                         echo "Attempting Docker Login"
                         bat """
-                        echo %DOCKERHUB_PSW% | docker login -u %DOCKERHUB_USR% --password-stdin
+                        echo ${DOCKERHUB_PSW} | docker login -u ${DOCKERHUB_USR} --password-stdin
                         echo Exit code: %ERRORLEVEL%
                         """
                     }

@@ -7,7 +7,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    // Login to Docker Hub using credentials stored in Jenkins
+                    // Use Docker config for authentication
                     withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'DOCKERHUB_PSW', usernameVariable: 'DOCKERHUB_USR')]) {
                         echo "Docker Username: ${DOCKERHUB_USR}"
                         echo "Attempting Docker Login"
@@ -24,6 +24,7 @@ pipeline {
         stage('Test') {
             steps {
                 script {
+                    // Run Cypress tests
                     bat 'npm install'
                     bat 'npx cypress run'
                 }

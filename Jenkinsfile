@@ -1,107 +1,59 @@
 pipeline {
     agent any
-
     environment {
         DOCKER_IMAGE = 'my-node-app'
-        SONARQUBE_URL = 'http://localhost:9000'
-        SONARQUBE_TOKEN = 'squ_fec78446cff9d7006cf3058bb320c20f35aefccb'
-        CYPRESS_CACHE_FOLDER = 'C:\\CypressCache'
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
     }
-
-    triggers {
-        githubPush()
-    }
-
     stages {
-        stage('Checkout SCM') {
-            steps {
-                checkout scm
-            }
-        }
-        stage('Verify Docker Setup') {
+        stage('Build') {
             steps {
                 script {
-                    bat 'docker --version'
-                    bat 'docker ps'
+                    // Login to Docker Hub
+                    sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
+                    // Build the Docker image
+                    def app = docker.build("${DOCKER_IMAGE}:latest")
+                    // Push the Docker image to Docker Hub
+                    app.push()
+                    // Logout from Docker Hub
+                    sh "docker logout"
                 }
             }
         }
-        stage('Build Docker Image') {
+        stage('Test') {
             steps {
-                script {
-                    docker.build("${DOCKER_IMAGE}")
-                }
-            }
-        }
-        stage('Print Working Directory') {
-            steps {
-                script {
-                    bat 'echo %CD%'
-                }
-            }
-        }
-        stage('Install Dependencies') {
-            steps {
-                bat 'npm install'
-            }
-        }
-        stage('Verify Cypress Installation') {
-            steps {
-                bat 'npx cypress verify'
-            }
-        }
-        stage('Run Tests') {
-            steps {
-                bat 'npm test'
-            }
-        }
-        stage('Run Cypress Tests') {
-            steps {
-                script {
-                    bat 'dir cypress/e2e'  // List contents to verify the test file is present
-                    bat 'npx cypress run --config baseUrl=http://localhost:3000/Website.html'
-                }
+                echo 'Running Cypress Tests...'
+                sh 'npm install'
+                sh 'npx cypress run'
             }
         }
         stage('Code Quality Analysis') {
             steps {
+                echo 'Running Code Quality Analysis...'
                 script {
-                    withSonarQubeEnv('SonarQube') {
-                        bat """
-                            sonar-scanner \
-                            -Dsonar.projectKey=my-node-app \
-                            -Dsonar.sources=. \
-                            -Dsonar.host.url=${SONARQUBE_URL} \
-                            -Dsonar.login=${SONARQUBE_TOKEN}
-                        """
+                    def scannerHome = tool 'SonarQube Scanner'
+                    withSonarQubeEnv('My SonarQube Server') {
+                        sh "${scannerHome}/bin/sonar-scanner"
                     }
                 }
             }
         }
-        stage('Deploy to Test Environment') {
+        stage('Deploy') {
             steps {
-                script {
-                    docker.build("${DOCKER_IMAGE}").run('-d -p 3000:3000')
-                }
+                echo 'Deploying...'
+                // Add your deployment commands here
             }
         }
-    }
-
-    post {
-        always {
-            cleanWs()
+        stage('Release') {
+            steps {
+                echo 'Releasing...'
+                // Add your release commands here
+            }
         }
-        success {
-            emailext(
-                to: "prethyushamadhavan@gmail.com",
-                subject: "Jenkins Build Successful: ${env.JOB_NAME} ${env.BUILD_NUMBER}",
-                body: """<p>Good news!</p>
-                        <p>The Jenkins build for <strong>${env.JOB_NAME} ${env.BUILD_NUMBER}</strong> was successful.</p>
-                        <p>Check the details <a href="${env.BUILD_URL}">here</a>.</p>"""
-            )
-        }
-        failure {
-            echo 'The pipeline has failed.'
+        stage('Monitoring and Alerting') {
+            steps {
+                echo 'Monitoring and Alerting...'
+                // Add your monitoring and alerting commands here
+            }
         }
     }
 }

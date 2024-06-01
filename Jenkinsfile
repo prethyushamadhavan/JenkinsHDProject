@@ -2,26 +2,15 @@ pipeline {
     agent any
     environment {
         DOCKER_IMAGE = 'prethyusha/my-node-app'
+        DOCKER_CONFIG_PATH = 'C:\\ProgramData\\Jenkins\\.jenkins\\.docker'
     }
     stages {
         stage('Build') {
             steps {
                 script {
-                    // Login to Docker Hub using PAT
-                    withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'DOCKERHUB_PSW', usernameVariable: 'DOCKERHUB_USR')]) {
-                        echo "Docker Username: ${DOCKERHUB_USR}"
-                        echo "Attempting Docker Login"
-                        bat """
-                        echo %DOCKERHUB_PSW% | docker login -u %DOCKERHUB_USR% --password-stdin
-                        echo Exit code: %ERRORLEVEL%
-                        """
-                    }
-                    // Build the Docker image
-                    bat "docker build -t ${DOCKER_IMAGE}:latest ."
-                    // Push the Docker image to Docker Hub
-                    bat "docker push ${DOCKER_IMAGE}:latest"
-                    // Logout from Docker Hub
-                    bat "docker logout"
+                    // Use Docker config for authentication
+                    bat "docker --config ${env.DOCKER_CONFIG_PATH} build -t ${DOCKER_IMAGE}:latest ."
+                    bat "docker --config ${env.DOCKER_CONFIG_PATH} push ${DOCKER_IMAGE}:latest"
                 }
             }
         }

@@ -12,7 +12,10 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'DOCKERHUB_PSW', usernameVariable: 'DOCKERHUB_USR')]) {
                         echo "Docker Username: ${DOCKERHUB_USR}"
                         echo "Attempting Docker Login"
-                        bat "echo %DOCKERHUB_PSW% | docker login -u %DOCKERHUB_USR% --password-stdin"
+                        bat """
+                        echo %DOCKERHUB_PSW% | docker login -u %DOCKERHUB_USR% --password-stdin
+                        echo Exit code: %ERRORLEVEL%
+                        """
                     }
                     // Build the Docker image
                     bat "docker build -t ${DOCKER_IMAGE}:latest ."

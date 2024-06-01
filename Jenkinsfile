@@ -2,29 +2,21 @@ pipeline {
     agent any
     environment {
         DOCKER_IMAGE = 'prethyusha/my-node-app'
+        DOCKER_CONFIG_PATH = 'C:\\ProgramData\\Jenkins\\.jenkins\\.docker'
     }
     stages {
         stage('Build') {
             steps {
                 script {
                     // Use Docker config for authentication
-                    withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'DOCKERHUB_PSW', usernameVariable: 'DOCKERHUB_USR')]) {
-                        echo "Docker Username: ${DOCKERHUB_USR}"
-                        echo "Attempting Docker Login"
-                        bat """
-                        echo %DOCKERHUB_PSW% | docker login -u %DOCKERHUB_USR% --password-stdin
-                        docker build -t ${DOCKER_IMAGE}:latest .
-                        docker push ${DOCKER_IMAGE}:latest
-                        docker logout
-                        """
-                    }
+                    bat "docker --config ${env.DOCKER_CONFIG_PATH} build -t ${DOCKER_IMAGE}:latest ."
+                    bat "docker --config ${env.DOCKER_CONFIG_PATH} push ${DOCKER_IMAGE}:latest"
                 }
             }
         }
         stage('Test') {
             steps {
                 script {
-                    // Run Cypress tests
                     bat 'npm install'
                     bat 'npx cypress run'
                 }
@@ -33,7 +25,7 @@ pipeline {
         stage('Code Quality Analysis') {
             steps {
                 script {
-                    def scannerHome = tool 'SonarQube Scanner'
+                    def scannerHome = tool name: 'SonarQube Scanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
                     withSonarQubeEnv('My SonarQube Server') {
                         bat "${scannerHome}/bin/sonar-scanner"
                     }

@@ -4,13 +4,11 @@ pipeline {
         DOCKER_IMAGE = 'prethyusha/my-node-app'
         SONAR_PROJECT_KEY = 'my-node-app'
         SONAR_HOST_URL = 'http://localhost:9000'
-        SONAR_LOGIN = credentials('11') // Credential ID for SonarQube token
     }
     stages {
         stage('Build') {
             steps {
                 script {
-                    // Use Docker config for authentication
                     withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'DOCKERHUB_PSW', usernameVariable: 'DOCKERHUB_USR')]) {
                         echo "Docker Username: ${DOCKERHUB_USR}"
                         echo "Attempting Docker Login"
@@ -24,11 +22,17 @@ pipeline {
                 }
             }
         }
-        
+        stage('Start Server') {
+            steps {
+                script {
+                    bat 'npm start &'
+                    bat 'timeout /t 10'
+                }
+            }
+        }
         stage('Test') {
             steps {
                 script {
-                    // Run Cypress tests
                     bat 'npm install'
                     bat 'npx cypress run'
                 }
@@ -38,10 +42,12 @@ pipeline {
             steps {
                 script {
                     def scannerHome = tool 'SonarQube Scanner'
-                    withSonarQubeEnv('My SonarQube Server') {
-                        bat """
-                        ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=${SONAR_PROJECT_KEY} -Dsonar.sources=. -Dsonar.host.url=${SONAR_HOST_URL} -Dsonar.login=${SONAR_LOGIN}
-                        """
+                    withCredentials([string(credentialsId: '11', variable: 'SONAR_LOGIN')]) {
+                        withSonarQubeEnv('My SonarQube Server') {
+                            bat """
+                            ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=${SONAR_PROJECT_KEY} -Dsonar.sources=. -Dsonar.host.url=${SONAR_HOST_URL} -Dsonar.login=%SONAR_LOGIN%
+                            """
+                        }
                     }
                 }
             }
@@ -49,7 +55,6 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    // Add your deployment commands here
                     echo 'Deploying...'
                 }
             }
@@ -57,7 +62,6 @@ pipeline {
         stage('Release') {
             steps {
                 script {
-                    // Add your release commands here
                     echo 'Releasing...'
                 }
             }
@@ -65,7 +69,6 @@ pipeline {
         stage('Monitoring and Alerting') {
             steps {
                 script {
-                    // Add your monitoring and alerting commands here
                     echo 'Monitoring and Alerting...'
                 }
             }

@@ -26,7 +26,8 @@ pipeline {
             steps {
                 script {
                     bat 'npm install'
-                    bat 'npx cypress run'
+                    bat 'npm run cypress:run'
+                    bat 'npm run merge-reports'
                 }
             }
         }
@@ -34,7 +35,7 @@ pipeline {
             steps {
                 script {
                     def scannerHome = tool 'SonarQube Scanner'
-                    withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_LOGIN')]) {
+                    withCredentials([string(credentialsId: '11', variable: 'SONAR_LOGIN')]) {
                         withSonarQubeEnv('My SonarQube Server') {
                             bat """
                             ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=${SONAR_PROJECT_KEY} -Dsonar.sources=. -Dsonar.host.url=${SONAR_HOST_URL} -Dsonar.login=%SONAR_LOGIN%

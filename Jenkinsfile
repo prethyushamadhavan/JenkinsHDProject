@@ -2,10 +2,18 @@ pipeline {
     agent any
     environment {
         DOCKER_IMAGE = 'prethyusha/my-node-app'
-        SONAR_PROJECT_KEY = 'my-node-app'
-        SONAR_HOST_URL = 'http://localhost:9000'
     }
     stages {
+        stage('Clean Workspace') {
+            steps {
+                deleteDir() // Clean the workspace before starting the build
+            }
+        }
+        stage('Checkout SCM') {
+            steps {
+                checkout scm
+            }
+        }
         stage('Build') {
             steps {
                 script {
@@ -34,22 +42,6 @@ pipeline {
                 script {
                     bat 'npm install'
                     bat 'npm run test'
-                    bat 'npm run merge-reports'
-                    bat 'npm run generate-report'
-                }
-            }
-        }
-        stage('Code Quality Analysis') {
-            steps {
-                script {
-                    def scannerHome = tool 'SonarQube Scanner'
-                    withCredentials([string(credentialsId: '11', variable: 'SONAR_LOGIN')]) {
-                        withSonarQubeEnv('My SonarQube Server') {
-                            bat """
-                            ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=${SONAR_PROJECT_KEY} -Dsonar.sources=. -Dsonar.host.url=${SONAR_HOST_URL} -Dsonar.login=%SONAR_LOGIN%
-                            """
-                        }
-                    }
                 }
             }
         }

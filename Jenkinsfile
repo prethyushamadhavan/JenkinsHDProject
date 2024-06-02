@@ -34,6 +34,10 @@ pipeline {
                 script {
                     bat 'npm install'
                     bat 'npm run cypress:run'
+                    // List files in reports directory to ensure they are created
+                    bat 'dir cypress\\reports'
+                    // Print the contents of the JSON files for debugging
+                    bat 'type cypress\\reports\\*.json'
                     bat 'npm run merge-reports'
                 }
             }

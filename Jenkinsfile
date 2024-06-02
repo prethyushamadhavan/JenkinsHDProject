@@ -54,10 +54,4 @@ pipeline {
             }
         }
     }
-    post {
-        always {
-            archiveArtifacts artifacts: 'cypress/reports/*.json, cypress/reports/index.html', allowEmptyArchive: true
-            junit 'cypress/reports/junit/*.xml' // Ensure this path matches the JUnit report output
-        }
-    }
-}
+    

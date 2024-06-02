@@ -3,12 +3,6 @@ pipeline {
     environment {
         DOCKER_IMAGE = 'prethyusha/my-node-app'
     }
-    stages {
-        stage('Clean Workspace') {
-            steps {
-                deleteDir() // Clean the workspace before starting the build
-            }
-        }
         stage('Checkout SCM') {
             steps {
                 checkout scm
@@ -27,13 +21,6 @@ pipeline {
                         docker logout
                         """
                     }
-                }
-            }
-        }
-        stage('Prepare Environment') {
-            steps {
-                script {
-                    bat 'powershell -Command "if (-Not (Test-Path -Path \\"cypress\\reports\\")) { New-Item -ItemType Directory -Path \\"cypress\\reports\\" }"'
                 }
             }
         }

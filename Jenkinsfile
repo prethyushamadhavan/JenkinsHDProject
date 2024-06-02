@@ -4,11 +4,6 @@ pipeline {
         DOCKER_IMAGE = 'prethyusha/my-node-app'
     }
     stages {
-        stage('Clean Workspace') {
-            steps {
-                deleteDir() // Clean the workspace before starting the build
-            }
-        }
         stage('Checkout SCM') {
             steps {
                 checkout scm
@@ -27,13 +22,6 @@ pipeline {
                         docker logout
                         """
                     }
-                }
-            }
-        }
-        stage('Prepare Environment') {
-            steps {
-                script {
-                    bat 'powershell -Command "if (-Not (Test-Path -Path \\"cypress\\reports\\")) { New-Item -ItemType Directory -Path \\"cypress\\reports\\" }"'
                 }
             }
         }
@@ -65,12 +53,6 @@ pipeline {
                     echo 'Monitoring and Alerting...'
                 }
             }
-        }
-    }
-    post {
-        always {
-            archiveArtifacts artifacts: 'cypress/reports/*.json, cypress/reports/index.html', allowEmptyArchive: true
-            junit 'cypress/reports/junit/*.xml' // Ensure this path matches the JUnit report output
         }
     }
 }

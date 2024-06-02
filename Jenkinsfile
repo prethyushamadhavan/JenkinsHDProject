@@ -22,6 +22,13 @@ pipeline {
                 }
             }
         }
+        stage('Prepare Environment') {
+            steps {
+                script {
+                    bat 'mkdir cypress\\reports'
+                }
+            }
+        }
         stage('Test') {
             steps {
                 script {
@@ -65,6 +72,12 @@ pipeline {
                     echo 'Monitoring and Alerting...'
                 }
             }
+        }
+    }
+    post {
+        always {
+            archiveArtifacts artifacts: 'cypress/reports/*.json, cypress/reports/*.html', allowEmptyArchive: true
+            junit 'cypress/reports/*.xml'
         }
     }
 }

@@ -9,6 +9,13 @@ module.exports = defineConfig({
     execTimeout: 60000,
     pageLoadTimeout: 60000,
     requestTimeout: 60000,
-    responseTimeout: 60000
+    responseTimeout: 60000,
+    reporter: 'mochawesome',
+    reporterOptions: {
+      reportDir: 'cypress/reports',
+      overwrite: false,
+      html: false,
+      json: true
+    }
   }
 });

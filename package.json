@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./index.js",
-    "test": "cypress run"
+    "test": "cypress run",
+    "cypress:run": "cypress run",
+    "merge-reports": "mochawesome-merge cypress/reports/*.json > cypress/reports/report.json && marge cypress/reports/report.json"
   },
   "keywords": [
     "node",
@@ -20,6 +22,10 @@
     "express": "^4.17.1"
   },
   "devDependencies": {
-    "cypress": "^10.0.0"
+    "cypress": "^10.0.0",
+    "mochawesome": "^7.0.1",
+    "mochawesome-merge": "^4.2.0",
+    "mochawesome-report-generator": "^5.2.0"
   }
 }
+

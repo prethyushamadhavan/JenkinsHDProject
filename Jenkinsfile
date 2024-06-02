@@ -3,6 +3,7 @@ pipeline {
     environment {
         DOCKER_IMAGE = 'prethyusha/my-node-app'
     }
+    stages {
         stage('Checkout SCM') {
             steps {
                 checkout scm
@@ -54,4 +55,4 @@ pipeline {
             }
         }
     }
-    
+}

@@ -9,11 +9,11 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'DOCKERHUB_PSW', usernameVariable: 'DOCKERHUB_USR')]) {
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'DOCKERHUB_TOKEN', usernameVariable: 'DOCKERHUB_USR')]) {
                         echo "Docker Username: ${DOCKERHUB_USR}"
                         echo "Attempting Docker Login"
                         bat """
-                        echo %DOCKERHUB_PSW% | docker login -u %DOCKERHUB_USR% --password-stdin
+                        echo %DOCKERHUB_TOKEN% | docker login -u %DOCKERHUB_USR% --password-stdin
                         docker build -t ${DOCKER_IMAGE}:latest .
                         docker push ${DOCKER_IMAGE}:latest
                         docker logout
@@ -25,7 +25,7 @@ pipeline {
         stage('Prepare Environment') {
             steps {
                 script {
-                    bat 'mkdir cypress\\reports'
+                    bat 'powershell -Command "if (-Not (Test-Path -Path \\"cypress\\reports\\")) { New-Item -ItemType Directory -Path \\"cypress\\reports\\" }"'
                 }
             }
         }

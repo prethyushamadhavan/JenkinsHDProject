@@ -33,11 +33,9 @@ pipeline {
             steps {
                 script {
                     bat 'npm install'
-                    bat 'npm run cypress:run'
-                    // List files in reports directory to ensure they are created
-                    bat 'dir cypress\\reports'
-                    // Print the contents of the JSON files for debugging
-                    bat 'type cypress\\reports\\*.json'
+                    bat 'npm run test'
+                    bat 'npm run merge-reports'
+                    bat 'npm run generate-report'
                 }
             }
         }
@@ -79,8 +77,8 @@ pipeline {
     }
     post {
         always {
-            archiveArtifacts artifacts: 'cypress/reports/*.json, cypress/reports/*.html', allowEmptyArchive: true
-            junit 'cypress/reports/*.xml'
+            archiveArtifacts artifacts: 'cypress/reports/*.json, cypress/reports/index.html', allowEmptyArchive: true
+            junit 'cypress/reports/junit/*.xml' // Ensure this path matches the JUnit report output
         }
     }
 }

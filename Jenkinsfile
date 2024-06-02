@@ -33,7 +33,7 @@ pipeline {
         stage('Code Quality Analysis') {
             steps {
                 script {
-                    def scannerHome = tool 'SonarQube Scanner'
+                    def scannerHome = tool name: 'SonarQube Scanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
                     withCredentials([string(credentialsId: '11', variable: 'SONAR_LOGIN')]) {
                         withSonarQubeEnv('My SonarQube Server') {
                             bat """

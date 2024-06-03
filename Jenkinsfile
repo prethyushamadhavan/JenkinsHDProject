@@ -33,14 +33,6 @@ pipeline {
             }
         }
         
-        stage('Install Cypress') {
-            steps {
-                script {
-                    bat 'npm install cypress --save-dev'
-                }
-            }
-        }
-        
         stage('Test') {
             steps {
                 script {

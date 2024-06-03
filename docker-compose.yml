@@ -1,0 +1,6 @@
+version: '3'
+services:
+  app:
+    image: prethyusha/my-node-app:latest
+    ports:
+      - "8080:80"

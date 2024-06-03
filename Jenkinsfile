@@ -1,13 +1,19 @@
 pipeline {
     agent any
     environment {
-        DOCKER_IMAGE = 'prethyusha/my-node-app:latest'
+        DOCKER_IMAGE = 'prethyusha/my-node-app'
+        DOCKER_TAG = 'latest' // Use 'latest' tag
         SONAR_PROJECT_KEY = 'my-node-app'
         SONAR_HOST_URL = 'http://localhost:9000'
         SONAR_LOGIN = credentials('11') // SonarQube token
         DOCKERHUB_CREDENTIALS_ID = 'dockerhub-credentials'
     }
     stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
         stage('Build') {
             steps {
                 script {
@@ -16,8 +22,22 @@ pipeline {
                         echo "Attempting Docker Login"
                         bat """
                         echo %DOCKERHUB_PSW% | docker login -u %DOCKERHUB_USR% --password-stdin
-                        docker build -t ${DOCKER_IMAGE} .
-                        docker push ${DOCKER_IMAGE}
+                        docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .
+                        docker logout
+                        """
+                    }
+                }
+            }
+        }
+        
+        stage('Push Image') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: DOCKERHUB_CREDENTIALS_ID, passwordVariable: 'DOCKERHUB_PSW', usernameVariable: 'DOCKERHUB_USR')]) {
+                        echo "Attempting Docker Login for Push"
+                        bat """
+                        echo %DOCKERHUB_PSW% | docker login -u %DOCKERHUB_USR% --password-stdin
+                        docker push ${DOCKER_IMAGE}:${DOCKER_TAG}
                         docker logout
                         """
                     }
@@ -32,8 +52,7 @@ pipeline {
                 }
             }
         }
-
-
+        
         stage('Install Cypress') {
             steps {
                 script {
@@ -41,6 +60,7 @@ pipeline {
                 }
             }
         }
+        
         stage('Test') {
             steps {
                 script {
@@ -77,8 +97,8 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: DOCKERHUB_CREDENTIALS_ID, passwordVariable: 'DOCKERHUB_PSW', usernameVariable: 'DOCKERHUB_USR')]) {
                         bat """
                         echo %DOCKERHUB_PSW% | docker login -u %DOCKERHUB_USR% --password-stdin
-                        docker pull ${DOCKER_IMAGE}
-                        docker run -d -p 8080:80 --name my-node-app ${DOCKER_IMAGE}
+                        docker pull ${DOCKER_IMAGE}:${DOCKER_TAG}
+                        docker run -d -p 8080:80 --name my-node-app ${DOCKER_IMAGE}:${DOCKER_TAG}
                         docker logout
                         """
                     }

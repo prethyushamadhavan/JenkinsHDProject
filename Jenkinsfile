@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        DOCKER_IMAGE = 'prethyusha/my-node-app'
+        DOCKER_IMAGE = 'prethyusha/my-node-app:latest'
         SONAR_PROJECT_KEY = 'my-node-app'
         SONAR_HOST_URL = 'http://localhost:9000'
         SONAR_LOGIN = credentials('11') // SonarQube token
@@ -16,8 +16,8 @@ pipeline {
                         echo "Attempting Docker Login"
                         bat """
                         echo %DOCKERHUB_PSW% | docker login -u %DOCKERHUB_USR% --password-stdin
-                        docker build -t ${DOCKER_IMAGE}:latest .
-                        docker push ${DOCKER_IMAGE}:latest
+                        docker build -t ${DOCKER_IMAGE} .
+                        docker push ${DOCKER_IMAGE}
                         docker logout
                         """
                     }
@@ -33,11 +33,18 @@ pipeline {
             }
         }
         
+        stage('Install Cypress') {
+            steps {
+                script {
+                    bat 'npm install cypress --save-dev'
+                }
+            }
+        }
+        
         stage('Test') {
             steps {
                 script {
                     bat """
-                    npx cypress install
                     echo Running Cypress Tests...
                     npx cypress run --spec 'cypress/e2e/**/*.cy.js'
                     if %ERRORLEVEL% neq 0 (
@@ -70,8 +77,8 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: DOCKERHUB_CREDENTIALS_ID, passwordVariable: 'DOCKERHUB_PSW', usernameVariable: 'DOCKERHUB_USR')]) {
                         bat """
                         echo %DOCKERHUB_PSW% | docker login -u %DOCKERHUB_USR% --password-stdin
-                        docker pull ${DOCKER_IMAGE}:latest
-                        docker run -d -p 8080:80 --name my-node-app ${DOCKER_IMAGE}:latest
+                        docker pull ${DOCKER_IMAGE}
+                        docker run -d -p 8080:80 --name my-node-app ${DOCKER_IMAGE}
                         docker logout
                         """
                     }

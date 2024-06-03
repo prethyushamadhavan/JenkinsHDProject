@@ -37,8 +37,10 @@ pipeline {
                 script {
                     bat """
                     if not exist C:\\Windows\\system32\\config\\systemprofile\\AppData\\Roaming\\npm mkdir C:\\Windows\\system32\\config\\systemprofile\\AppData\\Roaming\\npm
+                    cd C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\DevOps Pipeline
+                    npx cypress install
+                    npx cypress run --spec 'cypress/e2e/**/*.cy.js'
                     """
-                    bat 'npx cypress run'
                 }
             }
         }

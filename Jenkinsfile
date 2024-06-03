@@ -25,15 +25,28 @@ pipeline {
             }
         }
         
+        stage('Install Dependencies') {
+            steps {
+                script {
+                    // Install npm dependencies including Cypress
+                    bat 'npm install'
+                }
+            }
+        }
+        
         stage('Test') {
             steps {
                 script {
+                    // Ensure npm global path exists
+                    bat """
+                    if not exist C:\\Users\\punya\\AppData\\Roaming\\npm mkdir C:\\Users\\punya\\AppData\\Roaming\\npm
+                    """
                     // Run Cypress tests
-                    bat 'npm install'
                     bat 'npx cypress run'
                 }
             }
         }
+        
         stage('Code Quality Analysis') {
             steps {
                 script {
@@ -46,6 +59,7 @@ pipeline {
                 }
             }
         }
+        
         stage('Deploy') {
             steps {
                 script {
@@ -54,6 +68,7 @@ pipeline {
                 }
             }
         }
+        
         stage('Release') {
             steps {
                 script {
@@ -62,6 +77,7 @@ pipeline {
                 }
             }
         }
+        
         stage('Monitoring and Alerting') {
             steps {
                 script {

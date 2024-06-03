@@ -4,13 +4,14 @@ pipeline {
         DOCKER_IMAGE = 'prethyusha/my-node-app'
         SONAR_PROJECT_KEY = 'my-node-app'
         SONAR_HOST_URL = 'http://localhost:9000'
-        SONAR_LOGIN = credentials('11') // Credential ID for SonarQube token
+        SONAR_LOGIN = credentials('11') // SonarQube token
+        DOCKERHUB_CREDENTIALS_ID = 'dockerhub-credentials'
     }
     stages {
         stage('Build') {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'DOCKERHUB_PSW', usernameVariable: 'DOCKERHUB_USR')]) {
+                    withCredentials([usernamePassword(credentialsId: DOCKERHUB_CREDENTIALS_ID, passwordVariable: 'DOCKERHUB_PSW', usernameVariable: 'DOCKERHUB_USR')]) {
                         echo "Docker Username: ${DOCKERHUB_USR}"
                         echo "Attempting Docker Login"
                         bat """
@@ -37,10 +38,10 @@ pipeline {
                 script {
                     bat """
                     npx cypress install
-                    echo "Running Cypress Tests..."
+                    echo Running Cypress Tests...
                     npx cypress run --spec 'cypress/e2e/**/*.cy.js'
                     if %ERRORLEVEL% neq 0 (
-                        echo "Cypress tests failed"
+                        echo Cypress tests failed
                         exit /b 1
                     )
                     """
@@ -54,9 +55,9 @@ pipeline {
                     def scannerHome = tool name: 'SonarQube Scanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
                     withSonarQubeEnv('My SonarQube Server') {
                         bat """
-                        echo "SonarQube Scanner Home: ${scannerHome}"
-                        echo "Running SonarQube Scanner..."
-                        ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=${SONAR_PROJECT_KEY} -Dsonar.sources=. -Dsonar.host.url=${SONAR_HOST_URL} -Dsonar.login=${SONAR_LOGIN} -X
+                        echo SonarQube Scanner Home: ${scannerHome}
+                        echo Running SonarQube Scanner...
+                        ${scannerHome}\\bin\\sonar-scanner -Dsonar.projectKey=${SONAR_PROJECT_KEY} -Dsonar.sources=. -Dsonar.host.url=${SONAR_HOST_URL} -Dsonar.login=${SONAR_LOGIN} -X
                         """
                     }
                 }
@@ -66,23 +67,14 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    echo 'Deploying...'
-                }
-            }
-        }
-        
-        stage('Release') {
-            steps {
-                script {
-                    echo 'Releasing...'
-                }
-            }
-        }
-        
-        stage('Monitoring and Alerting') {
-            steps {
-                script {
-                    echo 'Monitoring and Alerting...'
+                    withCredentials([usernamePassword(credentialsId: DOCKERHUB_CREDENTIALS_ID, passwordVariable: 'DOCKERHUB_PSW', usernameVariable: 'DOCKERHUB_USR')]) {
+                        bat """
+                        echo %DOCKERHUB_PSW% | docker login -u %DOCKERHUB_USR% --password-stdin
+                        docker pull ${DOCKER_IMAGE}:latest
+                        docker run -d -p 8080:80 --name my-node-app ${DOCKER_IMAGE}:latest
+                        docker logout
+                        """
+                    }
                 }
             }
         }

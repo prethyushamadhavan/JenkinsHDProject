@@ -39,6 +39,10 @@ pipeline {
                     npx cypress install
                     echo "Running Cypress Tests..."
                     npx cypress run --spec 'cypress/e2e/**/*.cy.js'
+                    if %ERRORLEVEL% neq 0 (
+                        echo "Cypress tests failed"
+                        exit /b 1
+                    )
                     """
                 }
             }

@@ -36,16 +36,9 @@ pipeline {
             steps {
                 script {
                     bat """
-                    if not exist C:\\Windows\\system32\\config\\systemprofile\\AppData\\Roaming\\npm mkdir C:\\Windows\\system32\\config\\systemprofile\\AppData\\Roaming\\npm
-                    cd C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\DevOps Pipeline
-                    dir cypress\\e2e
                     npx cypress install
                     echo "Running Cypress Tests..."
-                    npx cypress run --spec 'cypress/e2e/**/*.cy.js' --browser chrome --headed
-                    if %ERRORLEVEL% neq 0 (
-                        echo "Cypress tests failed"
-                        exit /b 1
-                    )
+                    npx cypress run --spec 'cypress/e2e/**/*.cy.js'
                     """
                 }
             }

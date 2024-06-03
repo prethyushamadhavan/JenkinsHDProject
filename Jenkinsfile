@@ -84,7 +84,7 @@ pipeline {
                         bat """
                         echo SonarQube Scanner Home: ${scannerHome}
                         echo Running SonarQube Scanner...
-                        ${scannerHome}\\bin\\sonar-scanner -Dsonar.projectKey=${SONAR_PROJECT_KEY} -Dsonar.sources=. -Dsonar.host.url=${SONAR_HOST_URL} -Dsonar.login=${SONAR_LOGIN} -Dsonar.inclusions=website.html
+                        ${scannerHome}\\bin\\sonar-scanner -Dsonar.projectKey=${SONAR_PROJECT_KEY} -Dsonar.sources=. -Dsonar.host.url=${SONAR_HOST_URL} -Dsonar.login=${SONAR_LOGIN} -Dsonar.inclusions=Website.html
                         """
                     }
                 }
@@ -96,9 +96,13 @@ pipeline {
                 script {
                     withCredentials([usernamePassword(credentialsId: DOCKERHUB_CREDENTIALS_ID, passwordVariable: 'DOCKERHUB_PSW', usernameVariable: 'DOCKERHUB_USR')]) {
                         bat """
+                        echo Stopping existing container...
+                        docker stop my-node-app || true
+                        docker rm my-node-app || true
+
                         echo %DOCKERHUB_PSW% | docker login -u %DOCKERHUB_USR% --password-stdin
                         docker pull ${DOCKER_IMAGE}:${DOCKER_TAG}
-                        docker run -d -p 8080:80 --name my-node-app ${DOCKER_IMAGE}:${DOCKER_TAG}
+                        docker run -d -p 8081:80 --name my-node-app ${DOCKER_IMAGE}:${DOCKER_TAG}
                         docker logout
                         """
                     }

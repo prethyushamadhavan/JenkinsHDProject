@@ -13,12 +13,5 @@ module.exports = defineConfig({
     pageLoadTimeout: 60000, // Set page load timeout to 60 seconds
     requestTimeout: 60000, // Set request timeout to 60 seconds
     responseTimeout: 60000, // Set response timeout to 60 seconds
-    reporter: 'mochawesome', // Use mochawesome reporter
-    reporterOptions: {
-      reportDir: 'cypress/reports', // Directory to save the report
-      overwrite: false, // Do not overwrite the report
-      html: false, // Disable HTML report
-      json: true, // Enable JSON report
-    },
   },
 });

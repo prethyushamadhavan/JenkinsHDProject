@@ -84,7 +84,7 @@ pipeline {
                         bat """
                         echo SonarQube Scanner Home: ${scannerHome}
                         echo Running SonarQube Scanner...
-                        ${scannerHome}\\bin\\sonar-scanner -Dsonar.projectKey=${SONAR_PROJECT_KEY} -Dsonar.sources=. -Dsonar.host.url=${SONAR_HOST_URL} -Dsonar.login=${SONAR_LOGIN} -X
+                        ${scannerHome}\\bin\\sonar-scanner -Dsonar.projectKey=${SONAR_PROJECT_KEY} -Dsonar.sources=. -Dsonar.host.url=${SONAR_HOST_URL} -Dsonar.login=${SONAR_LOGIN} -Dsonar.inclusions=website.html
                         """
                     }
                 }

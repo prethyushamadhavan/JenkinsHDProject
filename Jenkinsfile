@@ -2,11 +2,11 @@ pipeline {
     agent any
     environment {
         DOCKER_IMAGE = 'prethyusha/my-node-app'
-        DOCKER_TAG = 'latest' // Use 'latest' tag
+        DOCKER_TAG = 'latest'
         SONAR_PROJECT_KEY = 'my-node-app'
         SONAR_HOST_URL = 'http://localhost:9000'
         SONAR_LOGIN = credentials('11') // SonarQube token
-        DOCKERHUB_CREDENTIALS_ID = 'dockerhub-credentials'
+        DOCKERHUB_CREDENTIALS_ID = 'dockerhub-credentials' // Docker creds
     }
     stages {
         stage('Checkout') {
@@ -127,12 +127,27 @@ pipeline {
         }
     }
     
-    post {
+    post {           
+        success {
+            emailext(
+               subject: "SUCCESS: Jenkins Pipeline  #${env.BUILD_NUMBER}",
+                body: '''<html>
+                            <body>
+                         <p>The Pipeline build has completed successfully.</p>
+                         <p>Check console output at <a href="${BUILD_URL}console">here</a> to view the full results.</p>
+                            </body>
+                          </html>''',
+                to: 'prethyushamadhavan@gmail.com',
+                replyTo: 'notification@jenkins.com',
+                mimeType: 'text/html',
+                attachLog: true
+            )
+        }
         always {
-            mail to: 'prethyushamadhavan@gmail.com',
-                 subject: "Jenkins Pipeline: ${currentBuild.fullDisplayName}",
-                 body: """<p>Jenkins build ${currentBuild.fullDisplayName} finished with status: ${currentBuild.currentResult}</p>
-                        <p>Check console output at: ${env.BUILD_URL}console</p>"""
+            script {
+                def logFile = "${env.WORKSPACE}/console.log"
+                writeFile file: logFile, text: currentBuild.rawBuild.getLog(10000).join("\n")
+            }
         }
     }
 }

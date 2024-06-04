@@ -102,7 +102,7 @@ pipeline {
 
                         echo %DOCKERHUB_PSW% | docker login -u %DOCKERHUB_USR% --password-stdin
                         docker pull ${DOCKER_IMAGE}:${DOCKER_TAG}
-                        docker run -d -p 8081:80 --name my-node-app ${DOCKER_IMAGE}:${DOCKER_TAG}
+                        docker run -d -p 8081:3000 --name my-node-app prethyusha/my-node-app:latest
                         docker logout
                         """
                     }

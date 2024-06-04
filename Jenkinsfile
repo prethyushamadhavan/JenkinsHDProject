@@ -109,5 +109,38 @@ pipeline {
                 }
             }
         }
+        
+        stage('Release') {
+            steps {
+                script {
+                    echo "Releasing application... Tools like Octopus Deploy or AWS CodeDeploy can be used for this stage."
+                }
+            }
+        }
+        
+        stage('Monitoring and Alerting') {
+            steps {
+                script {
+                    echo "Setting up Monitoring and Alerting... Tools like Datadog or New Relic can be used for this stage."
+                }
+            }
+        }
+    }
+    
+    post {
+        always {
+            script {
+                def logFile = 'pipeline.log'
+                currentBuild.rawBuild.getLogFile().text = logFile
+                archiveArtifacts artifacts: logFile, allowEmptyArchive: true
+            }
+            emailext (
+                subject: "Jenkins Pipeline: ${currentBuild.fullDisplayName}",
+                body: """<p>Jenkins build ${currentBuild.fullDisplayName} finished with status: ${currentBuild.currentResult}</p>
+                        <p>Check console output at: ${env.BUILD_URL}console</p>""",
+                to: 'prethyushamadhavan@gmail.com',
+                attachLog: true
+            )
+        }
     }
 }

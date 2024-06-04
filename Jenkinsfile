@@ -129,18 +129,10 @@ pipeline {
     
     post {
         always {
-            script {
-                def logFile = 'pipeline.log'
-                currentBuild.rawBuild.getLogFile().text = logFile
-                archiveArtifacts artifacts: logFile, allowEmptyArchive: true
-            }
-            emailext (
-                subject: "Jenkins Pipeline: ${currentBuild.fullDisplayName}",
-                body: """<p>Jenkins build ${currentBuild.fullDisplayName} finished with status: ${currentBuild.currentResult}</p>
-                        <p>Check console output at: ${env.BUILD_URL}console</p>""",
-                to: 'prethyushamadhavan@gmail.com',
-                attachLog: true
-            )
+            mail to: 'prethyushamadhavan@gmail.com',
+                 subject: "Jenkins Pipeline: ${currentBuild.fullDisplayName}",
+                 body: """<p>Jenkins build ${currentBuild.fullDisplayName} finished with status: ${currentBuild.currentResult}</p>
+                        <p>Check console output at: ${env.BUILD_URL}console</p>"""
         }
     }
 }
